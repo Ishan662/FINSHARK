@@ -13,6 +13,10 @@ function App() {
     const handleChange = (e:ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setSearch(e.target.value);
     };
+
+    const onPortfolioCreate = (e: SyntheticEvent) => {
+      console.log(e);
+    }
     //onclick
     const onClick = async (e: SyntheticEvent  ) => {
       const result = await searchCompanies(search);
@@ -27,7 +31,7 @@ function App() {
     <div className="App">
       <Search onClick={onClick} search={search} handleChange={handleChange} />
       {serverError && <h1>{serverError}</h1>}
-      <CardList searchResults={searchResult} />
+      <CardList searchResults={searchResult} onPortfolioCreate={onPortfolioCreate}/>
     </div>
   );
 }
