@@ -1,42 +1,73 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+import { FaChartLine, FaBalanceScale, FaBuilding } from "react-icons/fa";
+import "./Sidebar.css";
 
 const Sidebar = () => {
+  const location = useLocation();
 
-  const HomeIcon = FaHome as React.ElementType;
+  const isActive = (path: string) => {
+    return location.pathname.includes(path);
+  };
+
+  const navItems = [
+    {
+      label: "Company Profile",
+      path: "company-profile",
+      icon: FaBuilding,
+      description: "Overview & Details",
+    },
+    {
+      label: "Income Statement",
+      path: "income-statement",
+      icon: FaChartLine,
+      description: "Revenue & Expenses",
+    },
+    {
+      label: "Balance Sheet",
+      path: "balance-sheet",
+      icon: FaBalanceScale,
+      description: "Assets & Liabilities",
+    },
+  ];
 
   return (
-    <nav className="block py-4 px-6 top-0 bottom-0 w-64 bg-white shadow-xl left-0 absolute flex-row flex-nowrap md:z-10 z-[9999] transition-all duration-300 ease-in-out transform translate-x-0">
-
-      <div className="flex-col min-h-full px-0 flex flex-wrap items-center justify-between w-full mx-auto overflow-y-auto overflow-x-hidden">
-
-        <div className="flex bg-white flex-col items-stretch mt-4 w-full">
-
-          <div className="flex flex-col list-none">
-
-            <Link
-              to="company-profile"
-              className="flex items-center text-gray-600 font-bold uppercase pt-1 pb-4"
-            >
-              <HomeIcon size={20} />
-              <h6 className="ml-3">Company Profile</h6>
-            </Link>
-
-            <Link
-              to="income-statement"
-              className="flex items-center text-gray-600 font-bold uppercase pt-1 pb-4"
-            >
-              <HomeIcon size={20} />
-              <h6 className="ml-3">Income Statement</h6>
-            </Link>
-
-          </div>
-
+    <nav className="sidebar-container">
+      <div className="sidebar-content">
+        {/* Header */}
+        <div className="sidebar-header">
+          <h2 className="sidebar-title">Analysis</h2>
+          <p className="sidebar-subtitle">Financial Statements</p>
         </div>
 
+        {/* Navigation Items */}
+        <div className="sidebar-nav">
+          {navItems.map((item) => {
+            const Icon = item.icon as React.ElementType;
+            const active = isActive(item.path);
+
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`sidebar-link ${active ? "active" : ""}`}
+              >
+                <div className="sidebar-icon">
+                  <Icon size={20} />
+                </div>
+                <div className="sidebar-text">
+                  <div className="sidebar-label">{item.label}</div>
+                  <div className="sidebar-description">{item.description}</div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
+      <div className="sidebar-footer">
+        <p className="text-sm text-gray-500">FinShark v1.0</p>
+      </div>
     </nav>
   );
 };

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CompanyProfile } from '../../../company';
 import { getCompanyProfile } from '../../../api';
-import Sidebar from '../../Sidebar/Sidebar';
 import CompanyDashboard from '../../CompanyDashboard/CompanyDashboard';
 import Tile from '../../Tile/Tile';
 
@@ -18,16 +17,13 @@ const CompanyPage = (props: Props) => {
             setCompany(result?.data[0])
         }
         getProfileInit();
-    }, [])
+    }, [ticker])
   return (
     <>
         {company ? (
-            <div className="w-full relative flex ct-docs-disable-sidebar-content overflow-x-hidden">
+            <div className="w-full">
 
-          <Sidebar /> 
-        
-          <CompanyDashboard><Tile title="Company Name" subTitle={company.companyName}></Tile></CompanyDashboard>
-          
+          <CompanyDashboard ticker={ticker!}><Tile title="Company Name" subTitle={company.companyName}></Tile></CompanyDashboard>
 
         </div>
         ): (
