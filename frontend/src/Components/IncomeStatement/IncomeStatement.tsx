@@ -74,15 +74,29 @@ const configs = [
 const IncomeStatement = () => {
   const ticker = useOutletContext<string>();
   const [incomeStatement, setIncomeStatement] = useState<CompanyIncomeStatement>();
+  const [error, setError] = useState<string>("");
   useEffect(() => {
     const incomeStatementFetch = async () => {
-      const result = await getIncomeStatement(ticker);
-      setIncomeStatement(result!.data[0]);
+      try {
+        console.log("Fetching income statement for ticker:", ticker);
+        const result = await getIncomeStatement(ticker);
+        console.log("Income statement response:", result);
+        if (!result?.data || result.data.length === 0) {
+          setError("No data received from API");
+        } else {
+          setIncomeStatement(result?.data[0]);
+        }
+      } catch (err: any) {
+        console.error("Error fetching income statement:", err);
+        setError(err.message || "Failed to fetch data");
+      }
     };
     incomeStatementFetch()
   }, [ticker])
   return (
-    <> {incomeStatement ? <><Table config={configs} data={incomeStatement}/>
+    <> {error ? (
+      <h1 className="text-red-500">Error: {error}</h1>
+    ) : incomeStatement ? <><Table config={configs} data={incomeStatement}/>
     </> : <>Loading...</>}</>
   )
 }

@@ -76,20 +76,34 @@ const config = [
 const BalanceSheet = () => {
     const ticker = useOutletContext<string>();
     const [balanceSheet, setBalanceSheet] = useState<CompanyBalanceSheet>();
+    const [error, setError] = useState<string>("");
     useEffect(() => {
         const getData = async () => {
-            const value = await getBalanceSheet(ticker!);
-            setBalanceSheet(value?.data[0]);
+            try {
+                console.log("Fetching balance sheet for ticker:", ticker);
+                const value = await getBalanceSheet(ticker!);
+                console.log("Balance sheet response:", value);
+                if (!value?.data || value.data.length === 0) {
+                    setError("No data received from API");
+                } else {
+                    setBalanceSheet(value?.data[0]);
+                }
+            } catch (err: any) {
+                console.error("Error fetching balance sheet:", err);
+                setError(err.message || "Failed to fetch data");
+            }
         }
         getData();
     }, [ticker]);
 
   return (
     <>
-      {balanceSheet ? (
+      {error ? (
+          <h1 className="text-red-500">Error: {error}</h1>
+      ) : balanceSheet ? (
           <RatioList config={config} data={balanceSheet} />
       ) : (
-          <h1>Company not found!</h1>
+          <h1>Loading...</h1>
       )}
     </>
   );

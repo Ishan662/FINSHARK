@@ -80,16 +80,30 @@ const tableConfig = [
 const CompanyProfile = () => {
   const ticker = useOutletContext<string>();
   const [companyData, setCompanyData] = useState<CompanyKeyMetrics>();
+  const [error, setError] = useState<string>("");
   useEffect(() => {
     const getCompanyKeyMetrics = async () => {
-      const value = await getKeyMetrics(ticker);
-      setCompanyData(value?.data[0])
+      try {
+        console.log("Fetching company metrics for ticker:", ticker);
+        const value = await getKeyMetrics(ticker);
+        console.log("Company metrics response:", value);
+        if (!value?.data || value.data.length === 0) {
+          setError("No data received from API");
+        } else {
+          setCompanyData(value?.data[0]);
+        }
+      } catch (err: any) {
+        console.error("Error fetching company metrics:", err);
+        setError(err.message || "Failed to fetch data");
+      }
     };
     getCompanyKeyMetrics();
   }, [ticker])
   return (
     <>
-      {companyData ? (
+      {error ? (
+        <h1 className="text-red-500">Error: {error}</h1>
+      ) : companyData ? (
         <>
           <RatioList config={tableConfig} data={companyData} />
         </>

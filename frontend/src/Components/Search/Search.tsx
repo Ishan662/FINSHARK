@@ -21,6 +21,12 @@ const Search: React.FC<Props> = ({onSearchSubmit, search, handleSearchChange}: P
             value={search}
             onChange={handleSearchChange}
           ></input>
+          <button 
+            type="submit"
+            className="px-8 py-3 bg-white text-darkBlue font-bold rounded-lg hover:bg-gray-200 transition"
+          >
+            Search
+          </button>
         </form>
       </div>
     </section>

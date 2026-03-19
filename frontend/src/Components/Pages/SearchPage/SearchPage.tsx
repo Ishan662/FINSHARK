@@ -34,13 +34,21 @@ const SearchPage = () => {
     }
     //onclick
     const onSearchSubmit = async (e: SyntheticEvent  ) => {
-      const result = await searchCompanies(search);
-      if(typeof result === "string"){
-        setServerError(result);
-      } else if(Array.isArray(result.data)){
-        setSearchResult(result.data);
+      e.preventDefault();
+      try {
+        console.log("Searching for:", search);
+        const result = await searchCompanies(search);
+        console.log("Search result:", result);
+        if(typeof result === "string"){
+          setServerError(result);
+        } else if(Array.isArray(result.data)){
+          setSearchResult(result.data);
+          console.log("Search results set:", result.data);
+        }
+      } catch (err: any) {
+        console.error("Search error:", err);
+        setServerError(err.message || "Failed to search companies");
       }
-      console.log(setSearchResult);
     };
   return (
     <>

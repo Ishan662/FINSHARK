@@ -1,10 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { FaChartLine, FaBalanceScale, FaBuilding } from "react-icons/fa";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { FaChartLine, FaBalanceScale, FaBuilding, FaMoneyBill } from "react-icons/fa";
 import "./Sidebar.css";
 
 const Sidebar = () => {
   const location = useLocation();
+  const { ticker } = useParams<{ ticker: string }>();
 
   const isActive = (path: string) => {
     return location.pathname.includes(path);
@@ -29,6 +30,12 @@ const Sidebar = () => {
       icon: FaBalanceScale,
       description: "Assets & Liabilities",
     },
+    {
+      label: "Cash Flow Statement",
+      path: "cashflow-statement",
+      icon: FaMoneyBill,
+      description: "Cash Inflows & Outflows",
+    },
   ];
 
   return (
@@ -49,7 +56,7 @@ const Sidebar = () => {
             return (
               <Link
                 key={item.path}
-                to={item.path}
+                to={`/company/${ticker}/${item.path}`}
                 className={`sidebar-link ${active ? "active" : ""}`}
               >
                 <div className="sidebar-icon">
