@@ -5,6 +5,7 @@ import { getCompanyProfile } from '../../../api';
 import CompanyDashboard from '../../CompanyDashboard/CompanyDashboard';
 import Tile from '../../Tile/Tile';
 import CompFinder from '../../CompFinder/CompFinder';
+import TenKFinder from '../../TenKFinder/TenKFinder';
 
 interface Props{}
 
@@ -46,7 +47,8 @@ const CompanyPage = (props: Props) => {
             <Tile title="Company Name" subTitle={company.companyName}></Tile>
             <Tile title="Price" subTitle={company.price.toString()}></Tile>
             <Tile title="Sector" subTitle={company.sector}></Tile>
-            <CompFinder ticker={company.symbol}
+            <CompFinder ticker={company.symbol} />
+            <TenKFinder ticker={company.symbol}/>
             
           </CompanyDashboard>
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CompanyTenK } from '../../company';
 import { getTenK } from '../../api';
+import TenKFinderItem from './TenKFinderItem/TenKFinderItem';
 
 type Props = {
     ticker: string;
