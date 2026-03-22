@@ -17,7 +17,7 @@ namespace api.Controllers
         {
             _context = context;
         }
-
+        //stock1
         [HttpGet]
 
         public IActionResult getAll()
