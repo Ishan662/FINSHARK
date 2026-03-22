@@ -27,7 +27,7 @@ namespace api.Controllers
 
             return Ok(stocks);
         }
-        
+        //added a comment line 
         [HttpGet("{id}")]
         public IActionResult getById([FromRoute] int id)
         {
