@@ -1,18 +1,18 @@
 import { Outlet } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
-import Sidebar from './Components/Sidebar/Sidebar';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { UserProvider } from './Context/UseAuth';
 
 function App() {
   return (
     <>
-      <Navbar />
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-1 ml-64">
-          <Outlet />
-        </div>
-      </div>
+      <UserProvider>
+        <Navbar />
+        <Outlet />
+        <ToastContainer />
+      </UserProvider>
     </>
   );
 }
