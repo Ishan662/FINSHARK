@@ -15,14 +15,14 @@ const TenKFinder = ({ticker} : Props) => {
             setCompanyData(value?.data);
         }
         getTenKData();
-    }, [ticker])
+    }, [ticker]);
   return (
     <div className='inline-flex rounded-md shadow-sm m-4'>
       {companyData ? (
         companyData?.slice(0,5).map((tenK) =>{
-            return <TenKFinderItem />
+            return <TenKFinderItem tenK={tenK} key={tenK.symbol} />
         })
-      )}
+      ) : null}
     </div>
   )
 }
