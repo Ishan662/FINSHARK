@@ -7,6 +7,7 @@ import {
 import { useOutletContext } from 'react-router-dom';
 import { getKeyMetrics } from '../../api';
 import RatioList from '../RatioList/RatioList';
+import StockComment from '../StockComment/StockComment';
 
 const tableConfig = [
   {
@@ -102,13 +103,17 @@ const CompanyProfile = () => {
   return (
     <>
       {error ? (
-        <h1 className="text-red-500">Error: {error}</h1>
+        <h1 className="text-red-500 p-4">
+          Error: {error}
+          {error.includes("404") && " - Try searching for a US ticker symbol (e.g., AAPL instead of APC.F). Some international tickers are not supported."}
+        </h1>
       ) : companyData ? (
         <>
           <RatioList config={tableConfig} data={companyData} />
+          <StockComment stockSymbol={ticker} />
         </>
       ) : (
-        <>Loading...</>
+        <>Loading company metrics...</>
       )}
     </>
   )

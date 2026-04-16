@@ -4,7 +4,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import { useAuth } from '../../../Context/UseAuth';
 import { useForm } from 'react-hook-form';
 
-type RegisterFormsInputs = {
+type LoginFormsInputs = {
     userName: string;
     password: string;
 }
@@ -16,9 +16,9 @@ const validation = Yup.object().shape({
 
 const LoginPage = () => {
   const { loginUser } = useAuth();
-  const {register, handleSubmit, formState: {errors}} = useForm<RegisterFormsInputs>({ resolver: yupResolver(validation )});
+  const {register, handleSubmit, formState: {errors}} = useForm<LoginFormsInputs>({ resolver: yupResolver(validation )});
 
-  const handleLogin = ( form: RegisterFormsInputs) => {
+  const handleLogin = ( form: LoginFormsInputs) => {
     loginUser(form.userName, form.password);
   };
   return(
